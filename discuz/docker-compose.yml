@@ -1,0 +1,40 @@
+# 版本
+version: "3"
+
+# 服务
+services:
+
+  mysql-server:
+    container_name: mysql
+    image: mysql:5.7.22
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - ${DISCUZ_ROOT_DIR:-.}/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-ultrax}
+      - MYSQL_USER=${MYSQL_USER:-root}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-root}
+
+  # DISCUZ_ROOT_DIR: like /mnt/datadisk0/discuzx
+  discuz-server:
+    container_name: discuz
+    image: relaxed/discuz:3.4-20220518
+    restart: always
+    ports:
+      - 80:80
+      ### If https is enabled, open the comments below
+      # - 443:443
+    volumes:
+      - ${DISCUZ_ROOT_DIR:-.}/web/data:/var/www/html/data
+      - ${DISCUZ_ROOT_DIR:-.}/web/uc_client/data:/var/www/html/uc_client/data
+      - ${DISCUZ_ROOT_DIR:-.}/web/uc_server/data:/var/www/html/uc_server/data
+      ### If https is enabled, open the comments below
+      # - ${DISCUZ_ROOT_DIR:-.}/certs/discuz.crt:/etc/ssl/certs/discuz.crt
+      # - ${DISCUZ_ROOT_DIR:-.}/certs/discuz.key:/etc/ssl/certs/discuz.key
+      # - ${DISCUZ_ROOT_DIR:-.}/apache_conf:/etc/apache2/sites-enabled
+    depends_on:
+      - mysql-server
+
