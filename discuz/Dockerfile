@@ -4,10 +4,18 @@ ARG discuz_url=https://gitee.com/Discuz/DiscuzX/attach_files/1067409/download/Di
 ARG tmp_discuz=/tmp/discuz
 RUN wget -O $tmp_discuz.zip $discuz_url
 RUN mkdir -p $tmp_discuz && unzip $tmp_discuz.zip -d $tmp_discuz
+
+# docker之间用container-name连接
 RUN sed -i \
     -e "s|127.0.0.1|mysql|g" \
     -e "s|localhost|mysql|g" \
     $tmp_discuz/upload/config/config_global_default.php
+
+# 安装的时候从config_default文件夹读取,仅仅安装的时候用一次
+RUN cp -rf $tmp_discuz/upload/config $tmp_discuz/upload/config_default
+RUN sed -i \
+    -e "s|./config/config_global_default.php|./config_default/config_global_default.php|g" \
+    $tmp_discuz/upload/install/index.php
 
 FROM php:7.4.29-apache
 

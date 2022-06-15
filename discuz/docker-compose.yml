@@ -28,10 +28,11 @@ services:
       ### If https is enabled, open the comments below
       # - 443:443
     volumes:
+      - ${DISCUZ_ROOT_DIR:-.}/web/config:/var/www/html/config
       - ${DISCUZ_ROOT_DIR:-.}/web/data:/var/www/html/data
       - ${DISCUZ_ROOT_DIR:-.}/web/uc_client/data:/var/www/html/uc_client/data
       - ${DISCUZ_ROOT_DIR:-.}/web/uc_server/data:/var/www/html/uc_server/data
-      ### If https is enabled, open the comments below
+      ### If https is enabled, open the comments below, 并且保证宿主机certs和apache_conf有内容
       # - ${DISCUZ_ROOT_DIR:-.}/certs/discuz.crt:/etc/ssl/certs/discuz.crt
       # - ${DISCUZ_ROOT_DIR:-.}/certs/discuz.key:/etc/ssl/certs/discuz.key
       # - ${DISCUZ_ROOT_DIR:-.}/apache_conf:/etc/apache2/sites-enabled

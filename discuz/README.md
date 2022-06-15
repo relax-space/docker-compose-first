@@ -1,9 +1,8 @@
 # discuz
 ## 功能
-1. 更新镜像方便
+1. docker-compose方式 启动及更新镜像
 2. 配置修改: 所有修改都在Dockerfile进行
-3. docker-compose方式启动
-4. 支持https, 如果要配置https,请去github下载apache配置, ssl可以从这里免费获取https://letsencrypt.org/how-it-works/
+3. 支持https, 如果要配置https,请在[github](https://github.com/relax-space/docker-compose-first/tree/main/discuz/apache_conf)下载apache配置, ssl可以从这里免费获取https://letsencrypt.org/how-it-works/
 
 
 ## 注意
@@ -21,6 +20,9 @@ docker-compose up -d
 cd discuz
 docker build -t discuz:xxx .
 ```
+
+## 说明
+web/config里面的内容, 只修改了一个地方, config_global_default.php把这个文件中的localhost和127.0.0.1替换成了mysql
 
 ## 引用
 
