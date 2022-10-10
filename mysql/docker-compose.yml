@@ -1,0 +1,15 @@
+version: "3"
+services:
+  mysql-server:
+    container_name: mysql
+    image: mysql
+    restart: always
+    ports:
+      # 左边宿主机的端口可以修改成别的,比如: 3309:3306
+      - 3306:3306
+    volumes:
+      - mysql-data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+volumes:
+  mysql-data:
